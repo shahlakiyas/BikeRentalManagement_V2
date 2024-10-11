@@ -39,7 +39,7 @@ namespace BikeRentalManagement_V2
                         break;
                     case "4":
                         Console.Clear();
-                        removebike(repository, bikeid);
+                        removebike(repository);
                         break;
                     case "5":
                         exit = true;
@@ -92,10 +92,10 @@ namespace BikeRentalManagement_V2
 
 
                 }
-                static void removebike(BikeRepository repository, string bikeid)
+                static void removebike(BikeRepository repository)
                 {
                     Console.WriteLine("enter bike id");
-                    Console.ReadLine();
+                    string bikeid = Console.ReadLine();
 
                     repository.removebike(bikeid);
                     Console.WriteLine("bike removed success");

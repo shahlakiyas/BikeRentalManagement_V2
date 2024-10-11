@@ -46,7 +46,7 @@ namespace BikeRentalManagement_V2
         }
         public void updatebikes(string BikeId, string Brand, string Modal, decimal Rentalprice)
         {
-            string updatequary = @"UPDATE bike SET BRAND=@brand,MODAL=@modal,RENTPRICE=@rentprice WHERE Bikeid=@id;";
+            string updatequary = @"UPDATE bike SET Bikeid=@id,BRAND=@brand,MODAL=@modal,RENTPRICE=@Rentalprice WHERE @BikeId =BikeId";
 
             try
             {
@@ -71,7 +71,7 @@ namespace BikeRentalManagement_V2
                 Console.WriteLine("error");
             }
         }
-        public void removebike(int id)
+        public void removebike(string id)
         {
             string deletequary = @"DELETE FROM bike WHERE Bikeid=@id;";
             try
@@ -81,7 +81,7 @@ namespace BikeRentalManagement_V2
                     connection.Open();
                     using (SqlCommand command = new SqlCommand(deletequary, connection))
                     {
-                        command.Parameters.AddWithValue(@"id", id);
+                        command.Parameters.AddWithValue(@"Bikeid", id);
                         command.ExecuteNonQuery();
                     }
                 }
