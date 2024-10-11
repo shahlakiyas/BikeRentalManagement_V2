@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -14,9 +15,11 @@ namespace BikeRentalManagement_V2
     {
         private string bikedbconnection = "Server=(localdb)\\MSSQLLocalDb;Database=BikeDatabase;Trusted_Connection=true;TrustServerCertificate=true";
 
-        public void createbike(string brand, string modal, decimal rentprice)
+        public void createbike(string BikeId,string Brand,string Modal,decimal Rentalprice)
         {
-            string insertquary = @"INSERT INTO bike(BRAND,MODAL,RENTPRICE) VALUES(@brand,@modal,@rentprice);";
+            string insertquary = @"
+                              INSERT INTO bike(Bikeid,BRAND,MODAL,RENTPRICE)
+                                VALUES('BIKE_001','Honda','CB-Shine',5.00)";
 
             try
             {
@@ -25,9 +28,10 @@ namespace BikeRentalManagement_V2
                     connection.Open();
                     using (SqlCommand command = new SqlCommand(insertquary, connection))
                     {
-                        command.Parameters.AddWithValue(@"brand", brand);
-                        command.Parameters.AddWithValue(@"modal", modal);
-                        command.Parameters.AddWithValue(@"rentprice", rentprice);
+                        command.Parameters.AddWithValue(@"Bikeid", BikeId);
+                        command.Parameters.AddWithValue(@"brand", Brand);
+                        command.Parameters.AddWithValue(@"modal", Modal);
+                        command.Parameters.AddWithValue(@"rentprice", Rentalprice);
                         command.ExecuteNonQuery();
                         Console.WriteLine("car added");
 
@@ -52,7 +56,6 @@ namespace BikeRentalManagement_V2
                     using (SqlCommand command = new SqlCommand(updatequary, connection))
                     {
                         command.Parameters.AddWithValue(@"id", id);
-
                         command.Parameters.AddWithValue(@"brand", brand);
                         command.Parameters.AddWithValue(@"modal", modal);
                         command.Parameters.AddWithValue(@"rentprice", rentprice);
@@ -102,7 +105,7 @@ namespace BikeRentalManagement_V2
                         Console.WriteLine("bike list");
                         while (reader.Read())
                         {
-                            int bikeid = reader.GetInt32(0);
+                            string bikeid= reader.GetInt32(0);
                             string brand = reader.GetString(1);
                             string modal = reader.GetString(2);
                             decimal rentprice = reader.GetDecimal(3);
