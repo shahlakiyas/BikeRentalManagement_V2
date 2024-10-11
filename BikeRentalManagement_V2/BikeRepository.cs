@@ -13,7 +13,7 @@ namespace BikeRentalManagement_V2
 {
     internal class BikeRepository
     {
-        private string bikedbconnection = "Server=(localdb)\\MSSQLLocalDb;Database=BikeDatabase;Trusted_Connection=true;TrustServerCertificate=true";
+        private string bikedbconnection = "Server=(localdb)\\MSSQLLocalDB;Database=BikeDatabase;Trusted_Connection=true;TrustServerCertificate=true";
 
         public void createbike(string BikeId,string Brand,string Modal,decimal Rentalprice)
         {
@@ -44,7 +44,7 @@ namespace BikeRentalManagement_V2
                 Console.WriteLine("error");
             }
         }
-        public void updatebike(int id, string brand, string modal, decimal rentprice)
+        public void updatebikes(string BikeId, string Brand, string Modal, decimal Rentalprice)
         {
             string updatequary = @"UPDATE bike SET BRAND=@brand,MODAL=@modal,RENTPRICE=@rentprice WHERE Bikeid=@id;";
 
@@ -55,10 +55,10 @@ namespace BikeRentalManagement_V2
                     connection.Open();
                     using (SqlCommand command = new SqlCommand(updatequary, connection))
                     {
-                        command.Parameters.AddWithValue(@"id", id);
-                        command.Parameters.AddWithValue(@"brand", brand);
-                        command.Parameters.AddWithValue(@"modal", modal);
-                        command.Parameters.AddWithValue(@"rentprice", rentprice);
+                        command.Parameters.AddWithValue(@"BikeId", BikeId);
+                        command.Parameters.AddWithValue(@"Brand", Brand);
+                        command.Parameters.AddWithValue(@"Modal", Modal);
+                        command.Parameters.AddWithValue(@"Rentalprice", Rentalprice);
                         command.ExecuteNonQuery();
                         Console.WriteLine("bike updated");
 
@@ -105,7 +105,7 @@ namespace BikeRentalManagement_V2
                         Console.WriteLine("bike list");
                         while (reader.Read())
                         {
-                            string bikeid= reader.GetInt32(0);
+                            string bikeid = reader.GetString(0);
                             string brand = reader.GetString(1);
                             string modal = reader.GetString(2);
                             decimal rentprice = reader.GetDecimal(3);
@@ -138,7 +138,7 @@ namespace BikeRentalManagement_V2
                     {
                         if (reader.Read())
                         {
-                            int bikeid = reader.GetInt32(0);
+                            string bikeid = reader.GetString(0);
                             string brand = reader.GetString(1);
                             string modal = reader.GetString(2);
                             decimal rentprice = reader.GetDecimal(3);
